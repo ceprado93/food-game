@@ -1,0 +1,15 @@
+ body {
+   padding: 0;
+   text-align: center;
+   background-color:rgba(236, 207, 79, 0.924);
+}
+  
+
+
+
+
+
+#game-intro {
+   float: left;
+   padding: 20px 20px;
+}

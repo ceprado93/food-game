@@ -10,7 +10,13 @@ const lunchGame = {
     license: undefined,
     /** @type {CanvasRenderingContext2D} */
     ctx: undefined,
+    chef: undefined,
     canvasDom: undefined,
+    keys: {
+        left: 'ArrowLeft',
+        right: 'ArrowRight',
+        space: ' '
+      },
     canvasSize: {
         w: undefined,
         h: undefined
@@ -19,15 +25,71 @@ const lunchGame = {
     init(id){
         this.canvasDom = document.querySelector (`#${id}`)
         this.ctx = this.canvasDom.getContext ('2d')
-        this. setDimensions()
+        this.setDimensions()
+        this.createChef()
+        this.drawAll()
+        this.setEventListeners() 
     },
 
     setDimensions(){
         this.canvasSize = {
-            w: window.innerWidth,
-            h: window.innerHeight
+            w: window.innerWidth-600,
+            h: window.innerHeight,
+            PosX:200
         }
         this.canvasDom.setAttribute ('width', this.canvasSize.w)
         this.canvasDom.setAttribute ('height', this.canvasSize.h)
+        //this.canvasDom.setAttribute ()
+
+        console.log(this.canvasDom)
     },
+
+    drawBoard() {
+        this.ctx.fillStyle = 'white'
+        this.ctx.fillRect(0, 0, this.canvasSize.w, this.canvasSize.h)
+ },
+ 
+ createChef() {
+    this.chef = new Chef (this.ctx, this.canvasSize) //150, 550, 100, 100, 'mariokart.png')
+  },
+
+
+  setEventListeners() {
+    document.onkeydown = e => {
+        console.log(e)
+
+      if (e.key === this.keys.left){
+        this.chef.move('left')
+      }
+      if (e.key === this.keys.right) {
+        this.chef.move('right')
+        console.log(e)
+      }
+      if (e.key === this.keys.space){ 
+        this.chef.move('space')
+        console.log(e)
+       }  
+    }
+      
+  },
+
+  drawAll() {
+    setInterval(() => {
+       // this.frames++
+        // this.frames % 70 === 0 ? this.createObstacle() : null
+        this.clearScreen()
+        this.drawBoard()
+        // this.drawDashedLines()
+        // this.drawContinuousLines()
+        this.chef.draw()
+        //this.chef.move()
+        // this.obstacle.drawObst() //? this.createObstacle() : null REVISAR
+        // this.totalScore() //REVISAR---------------------------------------------
+    }, 70)
+},
+
+clearScreen() {
+    this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
+},
 }
+
